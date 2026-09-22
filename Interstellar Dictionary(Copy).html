@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Interstellar Vault</title>
+  <style>
+    :root{--bg:#07070a;--panel:#101016;--panel-soft:#0c0c11;--line:#30303a;--line-soft:#22222b;--text:#eeeeF2;--muted:#8d8d99;--accent:#ff4fb3;--accent-soft:rgba(255,79,179,0.12);--accent-glow:rgba(255,79,179,0.25)}
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+    body{display:flex;justify-content:center;padding:18px 12px 28px}
+    .app{width:100%;max-width:520px}
+    .menu-button{position:fixed;top:14px;left:14px;width:42px;height:38px;border:1px solid var(--line);border-radius:8px;background:rgba(7,7,10,0.92);color:var(--accent);font-size:21px;cursor:pointer;z-index:1001;transition:border-color .2s ease,background .2s ease}
+    .menu-button:active{background:var(--accent-soft);border-color:var(--accent)}
+    .menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);opacity:0;visibility:hidden;transition:opacity .25s ease;z-index:999}
+    .menu-overlay.active{opacity:1;visibility:visible}
+    .side-menu{position:fixed;top:0;left:0;width:min(300px,82vw);height:100vh;background:#0a0a0f;border-right:1px solid var(--line);transform:translateX(-100%);transition:transform .28s ease;z-index:1000;overflow-y:auto;padding:70px 18px 24px}
+    .side-menu.active{transform:translateX(0)}
+    .menu-header{padding-bottom:18px;margin-bottom:10px;border-bottom:1px solid var(--line)}
+    .menu-title{margin:0;color:var(--accent);font-size:18px;font-weight:800;letter-spacing:1px}
+    .menu-subtitle{margin-top:5px;color:var(--muted);font-size:10px;letter-spacing:.5px}
+    .menu-section{margin-top:18px}
+    .menu-section-title{color:#666672;font-size:10px;font-weight:800;letter-spacing:1.2px;margin:0 0 7px 4px;text-transform:uppercase}
+    .menu-item{width:100%;display:block;text-align:left;border:1px solid transparent;border-radius:7px;background:transparent;color:var(--text);padding:11px 10px;margin-bottom:4px;font-size:13px;cursor:pointer;transition:background .18s ease,border-color .18s ease,color .18s ease}
+    .menu-item:active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+    header{text-align:center;padding:8px 0 18px;border-bottom:1px solid var(--line)}
+    .title{margin:0;color:var(--accent);font-size:clamp(22px,7vw,30px);font-weight:800;letter-spacing:.5px}
+    .subtitle{margin-top:6px;color:var(--muted);font-size:12px;letter-spacing:.35px}
+    .modebar{display:flex;align-items:center;justify-content:center;gap:12px;padding:14px 0 10px;color:var(--muted);font-size:13px}
+    .mode{color:var(--text);font-weight:700}
+    .swap{border:1px solid var(--line);background:transparent;color:var(--accent);width:38px;height:32px;border-radius:8px;font-size:19px;cursor:pointer}
+    .swap:active{background:var(--accent-soft);border-color:var(--accent)}
+    .panel-label{margin:7px 0;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.8px}
+    textarea{width:100%;min-height:145px;resize:vertical;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);padding:13px;outline:none;font-family:"Courier New",Courier,monospace;font-size:14px;line-height:1.5}
+    textarea:focus{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent-glow)}
+    textarea[readonly]{cursor:default}
+    .translate-wrap{display:flex;justify-content:center;padding:15px 0 16px}
+    #translate{border:1px solid var(--accent);background:transparent;color:var(--accent);border-radius:8px;padding:10px 22px;font-size:13px;font-weight:800;letter-spacing:.3px;cursor:pointer}
+    #translate:active{background:var(--accent-soft)}
+    .footer{margin-top:18px;padding-top:15px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:11px;line-height:1.5}
+    .tagline{color:var(--text)}
+    @media (max-width:500px){body{padding:18px 12px 24px}.title{font-size:23px}}
+  </style>
+</head>
+<body>
+
+<button id="menuButton" class="menu-button" type="button" aria-label="Open menu">☰</button>
+<div id="menuOverlay" class="menu-overlay"></div>
+
+<aside id="sideMenu" class="side-menu">
+  <div class="menu-header">
+    <h2 class="menu-title">INTERSTELLAR VAULT</h2>
+    <div class="menu-subtitle">Numeric Atypography Storage Protocol</div>
+  </div>
+
+  <div class="menu-section">
+    <div class="menu-section-title">Fundamentals</div>
+    <button class="menu-item">Fundamental</button>
+    <button class="menu-item">Numeric Atypography</button>
+    <button class="menu-item">Character Structure</button>
+  </div>
+
+  <div class="menu-section">
+    <div class="menu-section-title">Protocol</div>
+    <button class="menu-item">Encoding</button>
+    <button class="menu-item">Decoding</button>
+    <button class="menu-item">Prefix System</button>
+    <button class="menu-item">Character Classes</button>
+  </div>
+
+  <div class="menu-section">
+    <div class="menu-section-title">Dictionary</div>
+    <button class="menu-item">Character Dictionary</button>
+    <button class="menu-item">Numeric Codes</button>
+    <button class="menu-item">Control Characters</button>
+  </div>
+
+  <div class="menu-section">
+    <div class="menu-section-title">Information</div>
+    <button class="menu-item">About</button>
+  </div>
+</aside>
+
+<main class="app">
+
+<header>
+  <h1 class="title">INTERSTELLAR VAULT</h1>
+  <div class="subtitle">Numeric Atypography Storage Protocol</div>
+</header>
+
+<section class="modebar">
+  <span id="mode" class="mode">TEXT → CODE</span>
+  <button id="swap" class="swap" type="button" aria-label="Swap">⇅</button>
+</section>
+
+<section>
+  <div id="topLabel" class="panel-label">TEXT</div>
+  <textarea id="topInput" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Type here..."></textarea>
+</section>
+
+<div class="translate-wrap">
+  <button id="translate" type="button">TRANSLATE</button>
+</div>
+
+<section>
+  <div id="bottomLabel" class="panel-label">NUMERIC CODE</div>
+  <textarea id="bottomOutput" spellcheck="false" readonly></textarea>
+</section>
+
+<footer class="footer">
+  <div class="tagline">Information beyond ordinary reach.</div>
+  <div>IV-NASP • vALPHA</div>
+</footer>
+
+</main>
+
+<script>
+const LETTERS={a:"00281",b:"53709",c:"95825",d:"53551",e:"96213",f:"84214",g:"99818",h:"06270",i:"51475",j:"55302",k:"43923",l:"55629",m:"95945",n:"50929",o:"45056",p:"62022",q:"47128",r:"75371",s:"37761",t:"56571",u:"30878",v:"60959",w:"73793",x:"41159",y:"80756",z:"65475"};
+
+const NUMBERS={0:"475174",1:"813207",2:"769011",3:"681543",4:"996250",5:"159464",6:"126142",7:"615677",8:"085866",9:"551364"};
+
+const PUNCTUATION={",":"0936","!":"3885","?":"6264",";":"8385",":":"7027"};
+
+const PERIOD={".":"7101"};
+
+const LINES={"-":"972","–":"164","—":"219","_":"057"};
+
+const SYMBOLS={"@":"6277409","#":"4738138","$":"2396782","%":"3105552","&":"7574623","*":"9530926","+":"2081171","=":"7057547","/":"8002231","\\":"3998111","|":"7807375","^":"9246428","~":"2966662","`":"3991718"};
+
+const QUOTES={"'":"9028346688",'"':"2279320388","‘":"9360942023","’":"9137896952","“":"3353774425","”":"4574565296","«":"1440253262","»":"8625728621","‹":"4679009559","›":"9837860118"};
+
+const BRACKETS={"(":"96290447283",")":"94050051127","[":"98743720799","]":"08878962761","{":"20322819527","}":"27356628692","<":"98017701140",">":"73883068531"};
+
+const CONTROLS={" ":"47","\t":"82","\n":"36"};
+
+const PREFIX={
+  CONTROL:"1",
+  PERIOD:"0",
+  PUNCTUATION:"2",
+  NUMBER:"3",
+  LINE:"4",
+  SYMBOL:"5",
+  BRACKET:"6",
+  QUOTE:"7",
+  LETTER:"26"
+};
+
+function encodeText(text){
+  let r="";
+  for(const c of text){
+    if(PERIOD[c]!==undefined){
+      r+=PREFIX.PERIOD+PERIOD[c];
+      continue;
+    }
+
+    if(CONTROLS[c]!==undefined){
+      r+=PREFIX.CONTROL+CONTROLS[c];
+      continue;
+    }
+
+    const l=c.toLowerCase();
+
+    if(LETTERS[l]!==undefined){
+      r+=PREFIX.LETTER+LETTERS[l];
+      continue;
+    }
+
+    if(NUMBERS[c]!==undefined){
+      r+=PREFIX.NUMBER+NUMBERS[c];
+      continue;
+    }
+
+    if(PUNCTUATION[c]!==undefined){
+      r+=PREFIX.PUNCTUATION+PUNCTUATION[c];
+      continue;
+    }
+
+    if(LINES[c]!==undefined){
+      r+=PREFIX.LINE+LINES[c];
+      continue;
+    }
+
+    if(SYMBOLS[c]!==undefined){
+      r+=PREFIX.SYMBOL+SYMBOLS[c];
+      continue;
+    }
+
+    if(QUOTES[c]!==undefined){
+      r+=PREFIX.QUOTE+QUOTES[c];
+      continue;
+    }
+
+    if(BRACKETS[c]!==undefined){
+      r+=PREFIX.BRACKET+BRACKETS[c];
+      continue;
+    }
+
+    r+=c;
+  }
+
+  return r;
+}
+
+function createReverseDictionary(d){
+  const r={};
+  for(const c in d){
+    r[d[c]]=c;
+  }
+  return r;
+}
+
+const REVERSE_LETTERS=createReverseDictionary(LETTERS),
+REVERSE_NUMBERS=createReverseDictionary(NUMBERS),
+REVERSE_PUNCTUATION=createReverseDictionary(PUNCTUATION),
+REVERSE_PERIOD=createReverseDictionary(PERIOD),
+REVERSE_LINES=createReverseDictionary(LINES),
+REVERSE_SYMBOLS=createReverseDictionary(SYMBOLS),
+REVERSE_QUOTES=createReverseDictionary(QUOTES),
+REVERSE_BRACKETS=createReverseDictionary(BRACKETS),
+REVERSE_CONTROLS=createReverseDictionary(CONTROLS);
+
+const DECODE_TYPES=[
+  {prefix:"26",length:5,dictionary:REVERSE_LETTERS},
+  {prefix:"7",length:10,dictionary:REVERSE_QUOTES},
+  {prefix:"6",length:11,dictionary:REVERSE_BRACKETS},
+  {prefix:"5",length:7,dictionary:REVERSE_SYMBOLS},
+  {prefix:"4",length:3,dictionary:REVERSE_LINES},
+  {prefix:"3",length:6,dictionary:REVERSE_NUMBERS},
+  {prefix:"2",length:4,dictionary:REVERSE_PUNCTUATION},
+  {prefix:"1",length:2,dictionary:REVERSE_CONTROLS},
+  {prefix:"0",length:4,dictionary:REVERSE_PERIOD}
+];
+
+const DICTIONARY_ERROR="Code not found in the Interstellar Dictionary.";
+
+function decodeCode(code){
+  let r="",p=0;
+
+  while(p<code.length){
+    let found=null;
+
+    for(const t of DECODE_TYPES){
+      if(code.startsWith(t.prefix,p)){
+        found=t;
+        break;
+      }
+    }
+
+    if(!found)return DICTIONARY_ERROR;
+
+    const s=p+found.prefix.length;
+    const e=s+found.length;
+
+    if(e>code.length)return DICTIONARY_ERROR;
+
+    const val=code.substring(s,e);
+
+    if(!/^\d+$/.test(val))return DICTIONARY_ERROR;
+
+    const ch=found.dictionary[val];
+
+    if(ch===undefined)return DICTIONARY_ERROR;
+
+    r+=ch;
+    p=e;
+  }
+
+  return r;
+}
+
+let textToCode=true;
+
+const mode=document.getElementById("mode"),
+topLabel=document.getElementById("topLabel"),
+bottomLabel=document.getElementById("bottomLabel"),
+topInput=document.getElementById("topInput"),
+bottomOutput=document.getElementById("bottomOutput"),
+swapButton=document.getElementById("swap"),
+translateButton=document.getElementById("translate");
+
+function updateModeUI(){
+  if(textToCode){
+    mode.textContent="TEXT → CODE";
+    topLabel.textContent="TEXT";
+    bottomLabel.textContent="NUMERIC CODE";
+    topInput.placeholder="Type here...";
+  }else{
+    mode.textContent="CODE → TEXT";
+    topLabel.textContent="NUMERIC CODE";
+    bottomLabel.textContent="TEXT";
+    topInput.placeholder="Enter numeric code...";
+  }
+}
+
+swapButton.addEventListener("click",function(){
+  const oldTop=topInput.value,
+  oldBottom=bottomOutput.value;
+
+  textToCode=!textToCode;
+
+  topInput.value=oldBottom;
+  bottomOutput.value=oldTop;
+
+  updateModeUI();
+});
+
+topInput.addEventListener("input",function(){
+  bottomOutput.value="";
+});
+
+translateButton.addEventListener("click",function(){
+  if(topInput.value.length===0)return;
+
+  bottomOutput.value=textToCode
+    ?encodeText(topInput.value)
+    :decodeCode(topInput.value);
+});
+
+
+/* MENU */
+
+const menuButton=document.getElementById("menuButton"),
+sideMenu=document.getElementById("sideMenu"),
+menuOverlay=document.getElementById("menuOverlay");
+
+function openMenu(){
+  sideMenu.classList.add("active");
+  menuOverlay.classList.add("active");
+}
+
+function closeMenu(){
+  sideMenu.classList.remove("active");
+  menuOverlay.classList.remove("active");
+}
+
+menuButton.addEventListener("click",function(){
+  if(sideMenu.classList.contains("active"))
+    closeMenu();
+  else
+    openMenu();
+});
+
+menuOverlay.addEventListener("click",closeMenu);
+
+
+/*
+  Menu → Text paragraf(copy).html
+
+  Urutan array harus sama dengan urutan
+  button.menu-item di HTML.
+*/
+
+const menuSections=[
+  "fundamental",
+  "numeric-atypography",
+  "character-structure",
+  "encoding",
+  "decoding",
+  "prefix-system",
+  "character-classes",
+  "character-dictionary",
+  "numeric-codes",
+  "control-characters",
+  "about"
+];
+
+document.querySelectorAll(".menu-item").forEach(function(item,index){
+  item.addEventListener("click",function(){
+
+    const section=menuSections[index];
+
+    if(!section)return;
+
+    window.location.href="Text Paragraf(copy).html?section="+encodeURIComponent(section);
+
+  });
+});
+
+updateModeUI();
+</script>
+
+</body>
+</html>

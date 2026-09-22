@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,
+             initial-scale=1.0,
+             maximum-scale=1.0,
+             user-scalable=no"
+>
+
+<title>Interstellar Vault — Info</title>
+
+<style>
+
+/* =========================================================
+   INTERSTELLAR VAULT — TEXT PARAGRAPH
+   ========================================================= */
+
+:root {
+    --bg: #07070a;
+    --panel: #101016;
+    --panel-soft: #15151b;
+    --line: #30303a;
+
+    --text: #eeeeF2;
+    --muted: #8d8d99;
+
+    --accent: #ff4fb3;
+    --accent-soft: rgba(255, 79, 179, 0.12);
+    --accent-line: rgba(255, 79, 179, 0.35);
+
+    --success: #9ee6c1;
+    --warning: #e8d39a;
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    background: var(--bg);
+    color: var(--text);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+.close-button {
+
+    position: fixed;
+
+    top: 18px;
+    right: 18px;
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9999;
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius: 50%;
+
+    background:
+        rgba(
+            16,
+            16,
+            22,
+            0.92
+        );
+
+    color: var(--text);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 28px;
+
+    font-weight: 300;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+/* Touch / hover */
+
+.close-button:hover {
+
+    background:
+        var(--panel-soft);
+
+    border-color:
+        var(--accent-line);
+
+}
+
+.close-button:active {
+
+    transform:
+        scale(0.90);
+
+}
+
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+.app {
+
+    width: 100%;
+
+    max-width: 720px;
+
+    margin: 0 auto;
+
+    padding:
+        22px
+        18px
+        35px;
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+
+    padding:
+        5px
+        0
+        20px;
+
+    padding-right:
+        55px;
+
+    border-bottom:
+        1px solid
+        var(--line);
+
+}
+
+.header-title {
+
+    margin: 0;
+
+    font-size:
+        clamp(
+            24px,
+            7vw,
+            34px
+        );
+
+    font-weight: 800;
+
+    letter-spacing:
+        0.5px;
+
+    color:
+        var(--text);
+
+}
+
+.header-subtitle {
+
+    margin-top: 6px;
+
+    color:
+        var(--muted);
+
+    font-size: 12px;
+
+    letter-spacing:
+        0.4px;
+
+}
+
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
+
+.section-title {
+
+    margin:
+        30px
+        0
+        24px;
+
+    padding-right:
+        45px;
+
+    font-size:
+        clamp(
+            25px,
+            7vw,
+            34px
+        );
+
+    line-height:
+        1.25;
+
+    font-weight:
+        800;
+
+    color:
+        var(--text);
+
+}
+
+.section-title::before {
+
+    content:
+        "— ";
+
+    color:
+        var(--accent);
+
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.content p {
+
+    margin:
+        0
+        0
+        20px;
+
+    font-size:
+        15px;
+
+    color:
+        var(--text);
+
+}
+
+.content strong {
+
+    font-weight:
+        700;
+
+    color:
+        var(--text);
+
+}
+
+
+/* =========================================================
+   SMALL HEADING
+   ========================================================= */
+
+.subheading {
+
+    margin:
+        28px
+        0
+        12px;
+
+    font-size:
+        17px;
+
+    font-weight:
+        800;
+
+    color:
+        var(--text);
+
+}
+
+
+/* =========================================================
+   EXAMPLE LABEL
+   ========================================================= */
+
+.example-label {
+
+    margin:
+        25px
+        0
+        9px;
+
+    color:
+        var(--muted);
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        0.8px;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+/* =========================================================
+   EXAMPLE CARD
+   ========================================================= */
+
+.example-card {
+
+    margin:
+        10px
+        0
+        24px;
+
+    padding:
+        18px
+        18px;
+
+    background:
+        var(--panel);
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius:
+        13px;
+
+    font-family:
+        "Courier New",
+        Courier,
+        monospace;
+
+    overflow-x:
+        auto;
+
+}
+
+.example-row {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        4px;
+
+}
+
+.example-input {
+
+    color:
+        var(--text);
+
+    font-size:
+        15px;
+
+}
+
+.example-arrow {
+
+    color:
+        var(--accent);
+
+    font-size:
+        15px;
+
+}
+
+.example-output {
+
+    color:
+        var(--accent);
+
+    font-size:
+        15px;
+
+    word-break:
+        break-all;
+
+}
+
+
+/* =========================================================
+   CODE CARD
+   ========================================================= */
+
+.code-card {
+
+    margin:
+        12px
+        0
+        24px;
+
+    padding:
+        16px
+        18px;
+
+    background:
+        var(--panel);
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius:
+        12px;
+
+    overflow-x:
+        auto;
+
+}
+
+.code-card code {
+
+    font-family:
+        "Courier New",
+        Courier,
+        monospace;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.8;
+
+    color:
+        var(--text);
+
+    white-space:
+        pre;
+
+}
+
+
+/* =========================================================
+   NOTE CARD
+   ========================================================= */
+
+.note-card {
+
+    margin:
+        25px
+        0;
+
+    padding:
+        16px
+        18px;
+
+    background:
+        var(--accent-soft);
+
+    border-left:
+        3px solid
+        var(--accent);
+
+    border-radius:
+        7px;
+
+}
+
+.note-title {
+
+    margin-bottom:
+        6px;
+
+    color:
+        var(--accent);
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.7px;
+
+    text-transform:
+        uppercase;
+
+}
+
+.note-card p {
+
+    margin:
+        0;
+
+    font-size:
+        13px;
+
+    color:
+        var(--text);
+
+}
+
+
+/* =========================================================
+   INFO CARD
+   ========================================================= */
+
+.info-card {
+
+    margin:
+        20px
+        0;
+
+    padding:
+        17px
+        18px;
+
+    background:
+        var(--panel);
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius:
+        12px;
+
+}
+
+.info-title {
+
+    margin-bottom:
+        10px;
+
+    color:
+        var(--text);
+
+    font-weight:
+        800;
+
+    font-size:
+        14px;
+
+}
+
+
+/* =========================================================
+   PREFIX TABLE
+   ========================================================= */
+
+.prefix-list {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        0;
+
+    margin:
+        15px
+        0
+        25px;
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius:
+        12px;
+
+    overflow:
+        hidden;
+
+    background:
+        var(--panel);
+
+}
+
+.prefix-row {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        75px
+        1fr;
+
+    padding:
+        11px
+        14px;
+
+    border-bottom:
+        1px solid
+        var(--line);
+
+    font-size:
+        13px;
+
+}
+
+.prefix-row:last-child {
+
+    border-bottom:
+        none;
+
+}
+
+.prefix-code {
+
+    font-family:
+        "Courier New",
+        Courier,
+        monospace;
+
+    color:
+        var(--accent);
+
+    font-weight:
+        700;
+
+}
+
+.prefix-name {
+
+    color:
+        var(--text);
+
+}
+
+
+/* =========================================================
+   CHARACTER LIST
+   ========================================================= */
+
+.character-list {
+
+    margin:
+        15px
+        0
+        25px;
+
+    padding:
+        15px
+        18px;
+
+    background:
+        var(--panel);
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius:
+        12px;
+
+}
+
+.character-list div {
+
+    padding:
+        8px
+        0;
+
+    border-bottom:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.06
+        );
+
+    font-family:
+        "Courier New",
+        Courier,
+        monospace;
+
+    font-size:
+        13px;
+
+}
+
+.character-list div:last-child {
+
+    border-bottom:
+        none;
+
+}
+
+
+/* =========================================================
+   HIGHLIGHT
+   ========================================================= */
+
+.highlight {
+
+    color:
+        var(--accent);
+
+    font-family:
+        "Courier New",
+        Courier,
+        monospace;
+
+    font-weight:
+        700;
+
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+
+    margin-top:
+        45px;
+
+    padding-top:
+        18px;
+
+    border-top:
+        1px solid
+        var(--line);
+
+    text-align:
+        center;
+
+    color:
+        var(--muted);
+
+    font-size:
+        11px;
+
+    line-height:
+        1.6;
+
+}
+
+.footer-main {
+
+    color:
+        var(--text);
+
+    margin-bottom:
+        3px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+    .app {
+
+        padding:
+            18px
+            15px
+            30px;
+
+    }
+
+    .content p {
+
+        font-size:
+            14.5px;
+
+    }
+
+    .example-card {
+
+        padding:
+            15px;
+
+    }
+
+    .prefix-row {
+
+        grid-template-columns:
+            65px
+            1fr;
+
+        font-size:
+            12px;
+
+    }
+
+    .close-button {
+
+        top:
+            14px;
+
+        right:
+            14px;
+
+        width:
+            42px;
+
+        height:
+            42px;
+
+        font-size:
+            27px;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior:
+            auto;
+    }
+
+    .close-button {
+        transition:
+            none;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     CLOSE BUTTON
+     ======================================================= -->
+
+<button
+    class="close-button"
+    type="button"
+    aria-label="Close"
+    onclick="closeInfoPage()"
+>
+    ×
+</button>
+
+
+<!-- =======================================================
+     APP
+     ======================================================= -->
+
+<main class="app">
+
+
+<header>
+
+    <h1 class="header-title">
+        INTERSTELLAR VAULT — INFO
+    </h1>
+
+    <div class="header-subtitle">
+        Numeric Atypography Storage Protocol
+    </div>
+
+</header>
+
+
+<section>
+
+    <h2
+        id="sectionTitle"
+        class="section-title"
+    ></h2>
+
+
+    <div
+        id="content"
+        class="content"
+    ></div>
+
+</section>
+
+
+<footer class="footer">
+
+    <div class="footer-main">
+        Information beyond ordinary reach.
+    </div>
+
+    <div>
+        IV-NASP
+    </div>
+
+</footer>
+
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+function closeInfoPage() {
+
+    window.location.href =
+        "Interstellar Dictionary.html";
+
+}
+
+
+/* =========================================================
+   INTERSTELLAR VAULT
+   TEXT PARAGRAPH DATABASE
+   ========================================================= */
+
+
+/*
+===========================================================
+ FUNDAMENTAL
+===========================================================
+*/
+
+const FUNDAMENTAL = {
+
+    title: "Fundamental",
+
+    content: `
+
+        <p>
+            <strong>Numeric Atypography</strong> adalah sistem
+            encoding berbasis karakter yang merepresentasikan
+            huruf, angka, tanda baca, simbol, dan karakter kontrol
+            melalui urutan numerik yang telah ditentukan.
+        </p>
+
+        <p>
+            Berbeda dari penulisan biasa, setiap karakter yang
+            didukung memiliki struktur numerik tertentu yang
+            terdiri dari sebuah prefix dan rangkaian angka unik.
+            Sistem ini dirancang agar teks biasa dapat
+            direpresentasikan sebagai bahasa numerik yang
+            terstruktur, sekaligus tetap dapat dikembalikan
+            melalui translator Interstellar Vault.
+        </p>
+
+        <div class="example-label">
+            Example
+        </div>
+
+        <div class="example-card">
+
+            <div class="example-row">
+
+                <div class="example-input">
+                    A
+                </div>
+
+                <div class="example-arrow">
+                    ↓
+                </div>
+
+                <div class="example-output">
+                    2600281
+                </div>
+
+            </div>
+
+        </div>
+
+        <p>
+            Dalam contoh tersebut, huruf <strong>A</strong>
+            direpresentasikan sebagai
+            <span class="highlight">2600281</span>.
+            Angka tersebut bukan sekadar angka biasa, melainkan
+            representasi karakter berdasarkan aturan yang
+            terdapat dalam Interstellar Dictionary.
+        </p>
+
+        <div class="note-card">
+
+            <div class="note-title">
+                Catatan
+            </div>
+
+            <p>
+                Istilah "Atypography" pada proyek ini merupakan
+                istilah atau konsep yang digunakan untuk sistem
+                penulisan numerik eksperimental. Sistem ini bukan
+                standar encoding resmi seperti ASCII atau Unicode.
+            </p>
+
+        </div>
+
+    `
+};
+
+
+/*
+===========================================================
+ NUMERIC ATYPOGRAPHY
+===========================================================
+*/
+
+const NUMERIC_ATYPOGRAPHY = {
+
+    title: "Numeric Atypography",
+
+    content: `
+
+        <p>
+            <strong>Numeric Atypography</strong> adalah konsep
+            penulisan utama yang digunakan oleh Interstellar Vault.
+            Alih-alih menggunakan bentuk visual karakter seperti
+            biasanya, karakter yang didukung diubah menjadi kode
+            numerik yang telah ditentukan oleh dictionary.
+        </p>
+
+        <p>
+            Setiap karakter termasuk ke dalam kategori tertentu,
+            seperti huruf, angka, tanda baca, simbol, quotation
+            marks, brackets, atau control characters. Setiap
+            kategori memiliki prefix dan panjang kode yang berbeda.
+        </p>
+
+        <div class="example-label">
+            Example
+        </div>
+
+        <div class="example-card">
+
+            <div class="example-row">
+
+                <div class="example-input">
+                    A
+                </div>
+
+                <div class="example-arrow">
+                    ↓
+                </div>
+
+                <div class="example-output">
+                    2600281
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class="example-row">
+
+                <div class="example-input">
+                    a
+                </div>
+
+                <div class="example-arrow">
+                    ↓
+                </div>
+
+                <div class="example-output">
+                    2600281
+                </div>
+
+            </div>
+
+        </div>
+
+        <p>
+            Huruf kapital dan huruf kecil diperlakukan sebagai
+            karakter yang sama. Dengan demikian, <strong>A</strong>
+            dan <strong>a</strong> menghasilkan representasi
+            numerik yang sama.
+        </p>
+
+        <div class="note-card">
+
+            <div class="note-title">
+                Catatan
+            </div>
+
+            <p>
+                Numeric Atypography dibuat sebagai sistem
+                eksperimental untuk mengeksplorasi bagaimana
+                informasi tertulis dapat direpresentasikan dalam
+                bentuk numerik yang berbeda dari tulisan biasa.
+            </p>
+
+        </div>
+
+    `
+};
+
+
+/*
+===========================================================
+ CHARACTER STRUCTURE
+===========================================================
+*/
+
+const CHARACTER_STRUCTURE = {
+
+    title: "Character Structure",
+
+    content: `
+
+        <p>
+            Setiap karakter yang di-encode mengikuti struktur
+            numerik yang telah ditentukan. Sebuah
+            <strong>prefix</strong> digunakan untuk
+            mengidentifikasi kategori karakter, sedangkan angka
+            setelah prefix digunakan untuk mengidentifikasi
+            karakter tertentu.
+        </p>
+
+        <p>
+            Sebagai contoh, huruf menggunakan prefix
+            <span class="highlight">26</span>, angka menggunakan
+            prefix <span class="highlight">3</span>, tanda baca
+            dasar menggunakan prefix <span class="highlight">2</span>,
+            dan karakter kontrol menggunakan prefix
+            <span class="highlight">1</span>.
+        </p>
+
+        <div class="example-label">
+            Example
+        </div>
+
+        <div class="example-card">
+
+            <div class="example-row">
+
+                <div>
+                    Letter
+                </div>
+
+                <div class="example-output">
+                    26 + 00281
+                </div>
+
+                <div>
+                    A
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class="example-row">
+
+                <div>
+                    Number
+                </div>
+
+                <div class="example-output">
+                    3 + 475174
+                </div>
+
+                <div>
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+        <p>
+            Struktur tersebut memungkinkan decoder mengetahui
+            berapa banyak digit yang harus dibaca untuk satu
+            karakter. Dengan demikian, rangkaian angka panjang
+            tidak dianggap sebagai satu angka besar, melainkan
+            sebagai kumpulan kode karakter.
+        </p>
+
+        <div class="note-card">
+
+            <div class="note-title">
+                Why it matters
+            </div>
+
+            <p>
+                Prefix dan panjang kode merupakan bagian penting
+                dari struktur sistem karena keduanya memungkinkan
+                mesin memisahkan satu karakter dari karakter
+                berikutnya.
+            </p>
+
+        </div>
+
+    `
+};
+
+
+/*
+===========================================================
+ ENCODING
+===========================================================
+*/
+
+const ENCODING = {
+
+    title: "Encoding",
+
+    content: `
+
+        <p>
+            <strong>Encoding</strong> adalah proses mengubah teks
+            biasa menjadi Numeric Atypography menggunakan
+            Interstellar Dictionary.
+        </p>
+
+        <p>
+            Setiap karakter yang didukung dicari di dalam
+            dictionary, kemudian digantikan dengan representasi
+            numeriknya. Proses tersebut dilakukan untuk setiap
+            karakter yang terdapat di dalam input.
+        </p>
+
+        <div class="example-label">
+            Example
+        </div>
+
+        <div class="example-card">
+
+            <div class="example-row">
+
+                <div class="example-input">
+                    A
+                </div>
+
+                <div class="example-arrow">
+                    ↓
+                </div>
+
+                <div class="example-output">
+                    2600281
+                </div>
+
+            </div>
+
+        </div>
+
+        <p>
+            Jika sebuah karakter tidak terdapat di dalam
+            dictionary, karakter tersebut tetap ditampilkan
+            seperti aslinya. Hal ini memungkinkan teks yang
+            mengandung karakter yang belum didukung tetap dapat
+            diproses tanpa menghilangkan karakter tersebut.
+        </p>
+
+        <div class="note-card">
+
+            <div class="note-title">
+                Translation Rule
+            </div>
+
+            <p>
+                Encoding hanya dilakukan ketika tombol
+                <strong>TRANSLATE</strong> ditekan. Sistem
+                Interstellar Vault tidak menggunakan real-time
+                translation.
+            </p>
+
+        </div>
+
+    `
+};
+
+
+/*
+===========================================================
+ DECODING
+===========================================================
+*/
+
+const DECODING = {
+
+    title: "Decoding",
+
+    content: `
+
+        <p>
+            <strong>Decoding</strong> merupakan proses kebalikan
+            dari encoding. Numeric Code dibaca berdasarkan prefix
+            dan panjang kode yang telah ditentukan, kemudian
+            dicocokkan dengan Interstellar Dictionary.
+        </p>
+
+        <p>
+            Jika setiap rangkaian berhasil dikenali, karakter
+            asli akan direkonstruksi menjadi teks biasa.
+        </p>
+
+        <div class="example-label">
+            Example
+        </div>
+
+        <div class="example-card">
+
+            <div class="example-row">
+
+                <div class="example-input">
+                    2600281
+                </div>
+
+                <div class="example-arrow">
+                    ↓
+                </div>
+
+                <div class="example-output">
+                    A
+                </div>
+
+            </div>
+
+        </div>
+
+        <p>
+            Namun, apabila sebuah rangkaian tidak terdapat di
+            dalam dictionary atau tidak mengikuti struktur kode
+            yang diperlukan, sistem tidak dapat menentukan
+            karakter yang dimaksud.
+        </p>
+
+        <div class="note-card">
+
+            <div class="note-title">
+                Dictionary Error
+            </div>
+
+            <p>
+                Code not found in the Interstellar Dictionary.
+            </p>
+
+        </div>
+
+        <p>
+            Pesan tersebut menunjukkan bahwa kode yang diberikan
+            tidak memiliki pasangan karakter yang valid di dalam
+            dictionary.
+        </p>
+
+    `
+};
+
+
+/*
+===========================================================
+ PREFIX SYSTEM
+===========================================================
+*/
+
+const PREFIX_SYSTEM = {
+
+    title: "Prefix System",
+
+    content: `
+
+        <p>
+            <strong>Prefix</strong> digunakan untuk
+            mengidentifikasi kategori dari setiap karakter
+            yang telah di-encode. Prefix membantu decoder
+            menentukan bagaimana sebuah rangkaian angka harus
+            dibaca.
+        </p>
+
+        <p>
+            Prefix merupakan bagian dari struktur kode dan
+            diperlukan agar sebuah Numeric Code dapat diproses
+            secara benar.
+        </p>
+
+        <div class="prefix-list">
+
+            <div class="prefix-row">
+                <div class="prefix-code">26</div>
+                <div class="prefix-name">Letters</div>
+            </div>
+
+            <div class="prefix-row">
+                <div class="prefix-code">3</div>
+                <div class="prefix-name">Numbers</div>
+            </div>
+
+            <div class="prefix-row">
+                <div class="prefix-code">2</div>
+                <div class="prefix-name">Basic punctuation</div>
+            </div>
+
+            <div class="prefix-row">
+                <div class="prefix-code">0</div>
+                <div class="prefix-name">Period</div>
+            </div>
+
+            <div class="prefix-row">
+                <div class="prefix-code">4</div>
+                <div class="prefix-name">Lines</div>
+            </div>
+
+            <div class="prefix-row">
+                <div class="prefix-code">5</div>
+                <div class="prefix-name">Common symbols</div>
+            </div>
+
+            <div class="prefix-row">
+                <div class="prefix-code">7</div>
+                <div class="prefix-name">Quotation symbols</div>
+            </div>
+
+            <div class="prefix-row">
+                <div class="prefix-code">6</div>
+                <div class="prefix-name">Brackets</div>
+            </div>
+
+            <div class="prefix-row">
+                <div class="prefix-code">1</div>
+                <div class="prefix-name">Control characters</div>
+            </div>
+
+        </div>
+
+        <div class="example-label">
+            Example
+        </div>
+
+        <div class="example-card">
+
+            <div class="example-row">
+
+                <div>
+                    26
+                </div>
+
+                <div class="example-arrow">
+                    ↓
+                </div>
+
+                <div>
+                    Letter category
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="note-card">
+
+            <div class="note-title">
+                Structure
+            </div>
+
+            <p>
+                Prefix tidak berdiri sendiri. Prefix harus
+                dibaca bersama panjang kode yang ditentukan
+                untuk kategorinya.
+            </p>
+
+        </div>
+
+    `
+};
+
+
+/*
+===========================================================
+ CHARACTER CLASSES
+===========================================================
+*/
+
+const CHARACTER_CLASSES = {
+
+    title: "Character Classes",
+
+    content: `
+
+        <p>
+            Interstellar Vault membagi karakter ke dalam beberapa
+            kelas agar berbagai jenis karakter dapat menggunakan
+            struktur numerik yang berbeda.
+        </p>
+
+        <p>
+            Pembagian tersebut membuat dictionary lebih teratur
+            dan membantu sistem menentukan cara membaca setiap
+            rangkaian kode.
+        </p>
+
+        <div class="character-list">
+
+            <div>
+                26 — Letters
+            </div>
+
+            <div>
+                3 — Numbers
+            </div>
+
+            <div>
+                2 — Basic punctuation
+            </div>
+
+            <div>
+                0 — Period
+            </div>
+
+            <div>
+                4 — Lines
+            </div>
+
+            <div>
+                5 — Common symbols
+            </div>
+
+            <div>
+                7 — Quotation symbols
+            </div>
+
+            <div>
+                6 — Brackets
+            </div>
+
+            <div>
+                1 — Control characters
+            </div>
+
+        </div>
+
+        <p>
+            Klasifikasi ini juga membuat sistem lebih mudah
+            dikembangkan di masa depan karena kategori baru
+            dapat ditambahkan tanpa harus mengubah seluruh
+            konsep dasar Numeric Atypography.
+        </p>
+
+        <div class="note-card">
+
+            <div class="note-title">
+                Classification
+            </div>
+
+            <p>
+                Setiap kelas memiliki prefix dan panjang kode
+                yang berbeda sesuai dengan jenis karakter yang
+                direpresentasikan.
+            </p>
+
+        </div>
+
+    `
+};
+
+
+/*
+===========================================================
+ CHARACTER DICTIONARY
+===========================================================
+*/
+
+const CHARACTER_DICTIONARY = {
+
+    title: "Character Dictionary",
+
+    content: `
+
+        <p>
+            <strong>Interstellar Dictionary</strong> merupakan
+            kumpulan representasi numerik yang diberikan kepada
+            setiap karakter yang didukung oleh sistem.
+        </p>
+
+        <p>
+            Setiap entry terdiri dari sebuah karakter dan
+            representasi Numeric Code yang sesuai. Dictionary
+            menjadi referensi utama yang digunakan oleh encoder
+            dan decoder.
+        </p>
+
+        <div class="example-label">
+            Example
+        </div>
+
+        <div class="example-card">
+
+            <div class="example-row">
+
+                <div>
+                    Character
+                </div>
+
+                <div class="example-output">
+                    A
+                </div>
+
+                <div>
+                    Numeric Code
+                </div>
+
+                <div class="example-output">
+                    2600281
+                </div>
+
+            </div>
+
+        </div>
+
+        <p>
+            Saat encoding, sistem mencari karakter di dalam
+            dictionary untuk menemukan kode numeriknya.
+            Sebaliknya, saat decoding, sistem mencari Numeric
+            Code untuk menemukan karakter yang sesuai.
+        </p>
+
+        <div class="note-card">
+
+            <div class="note-title">
+                Dictionary Rule
+            </div>
+
+            <p>
+                Tanpa entry dictionary yang cocok, sebuah
+                Numeric Code tidak dapat diterjemahkan secara
+                andal menjadi karakter tertentu.
+            </p>
+
+        </div>
+
+        <div class="info-card">
+
+            <div class="info-title">
+                Example Entries
+            </div>
+
+            <div class="code-card">
+
+                <code>
+a → 2600281
+b → 2653709
+c → 2695825
+d → 2653551
+e → 296213
+                </code>
+
+            </div>
+
+        </div>
+
+    `
+};
+
+
+/*
+===========================================================
+ NUMERIC CODES
+===========================================================
+*/
+
+const NUMERIC_CODES = {
+
+    title: "Numeric Codes",
+
+    content: `
+
+        <p>
+            <strong>Numeric Codes</strong> adalah rangkaian angka
+            yang dihasilkan oleh sistem Numeric Atypography.
+        </p>
+
+        <p>
+            Sebuah kode tidak ditafsirkan hanya berdasarkan
+            angka-angkanya. Prefix dan panjang kode menentukan
+            kategori karakter, sedangkan angka setelah prefix
+            mengidentifikasi karakter tertentu.
+        </p>
+
+        <div class="example-label">
+            Example
+        </div>
+
+        <div class="example-card">
+
+            <div class="example-row">
+
+                <div class="example-input">
+                    A
+                </div>
+
+                <div class="example-arrow">
+                    ↓
+                </div>
+
+                <div class="example-output">
+                    2600281
+                </div>
+
+            </div>
+
+        </div>
+
+        <p>
+            Beberapa kode karakter kemudian dapat digabungkan
+            menjadi sebuah pesan numerik yang panjang tanpa
+            menggunakan pemisah antar-karakter.
+        </p>
+
+        <div class="example-label">
+            Continuous Numeric Message
+        </div>
+
+        <div class="code-card">
+
+            <code>
+26002812643923263087814726959452600281260627014726959452
+            </code>
+
+        </div>
+
+        <p>
+            Dari luar, rangkaian tersebut dapat terlihat seperti
+            satu angka yang sangat panjang. Namun sebenarnya,
+            rangkaian tersebut terdiri dari banyak kode karakter
+            yang dapat dipisahkan menggunakan aturan prefix dan
+            panjang kode.
+        </p>
+
+        <div class="note-card">
+
+            <div class="note-title">
+                Important
+            </div>
+
+            <p>
+                Numeric Code bukan sekadar angka panjang.
+                Struktur internalnya menentukan bagaimana kode
+                tersebut harus dibaca oleh decoder.
+            </p>
+
+        </div>
+
+    `
+};
+
+
+/*
+===========================================================
+ CONTROL CHARACTERS
+===========================================================
+*/
+
+const CONTROL_CHARACTERS = {
+
+    title: "Control Characters",
+
+    content: `
+
+        <p>
+            <strong>Control characters</strong> adalah karakter
+            yang tidak selalu menghasilkan simbol visual, tetapi
+            memengaruhi struktur atau susunan sebuah teks.
+        </p>
+
+        <p>
+            Interstellar Vault saat ini memberikan representasi
+            numerik kepada tiga control characters utama:
+            Space, Tab, dan Newline.
+        </p>
+
+        <div class="prefix-list">
+
+            <div class="prefix-row">
+
+                <div class="prefix-code">
+                    147
+                </div>
+
+                <div class="prefix-name">
+                    Space
+                </div>
+
+            </div>
+
+            <div class="prefix-row">
+
+                <div class="prefix-code">
+                    182
+                </div>
+
+                <div class="prefix-name">
+                    Tab
+                </div>
+
+            </div>
+
+            <div class="prefix-row">
+
+                <div class="prefix-code">
+                    136
+                </div>
+
+                <div class="prefix-name">
+                    Newline
+                </div>
+
+            </div>
+
+        </div>
+
+        <p>
+            Dengan memberikan representasi numerik kepada
+            karakter-karakter tersebut, spasi dan struktur
+            baris dapat tetap dipertahankan ketika teks
+            diubah menjadi Numeric Atypography.
+        </p>
+
+        <div class="example-label">
+            Example
+        </div>
+
+        <div class="example-card">
+
+            <div class="example-row">
+
+                <div>
+                    SPACE
+                </div>
+
+                <div class="example-arrow">
+                    ↓
+                </div>
+
+                <div class="example-output">
+                    147
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class="example-row">
+
+                <div>
+                    NEWLINE
+                </div>
+
+                <div class="example-arrow">
+                    ↓
+                </div>
+
+                <div class="example-output">
+                    136
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="note-card">
+
+            <div class="note-title">
+                Invisible Structure
+            </div>
+
+            <p>
+                Control characters tidak selalu terlihat seperti
+                huruf atau simbol, tetapi tetap penting karena
+                dapat memengaruhi susunan teks.
+            </p>
+
+        </div>
+
+    `
+};
+
+
+/*
+===========================================================
+ ABOUT
+===========================================================
+*/
+
+const ABOUT = {
+
+    title: "About Interstellar Vault",
+
+    content: `
+
+        <p>
+            <strong>Interstellar Vault</strong> adalah proyek
+            eksperimental Numeric Atypography yang dibuat untuk
+            mengeksplorasi cara alternatif dalam merepresentasikan
+            informasi tertulis.
+        </p>
+
+        <p>
+            Ide proyek ini berawal dari sebuah pertanyaan sederhana:
+            bagaimana jika karakter biasa dapat direpresentasikan
+            menggunakan bahasa numerik terstruktur miliknya sendiri?
+        </p>
+
+        <p>
+            Dari gagasan tersebut, dikembangkanlah
+            <strong>Numeric Atypography</strong>, sebuah sistem
+            berbasis karakter di mana huruf, angka, simbol, tanda
+            baca, dan control characters memiliki representasi
+            numeriknya masing-masing.
+        </p>
+
+        <div class="example-label">
+            Basic Concept
+        </div>
+
+        <div class="example-card">
+
+            <div class="example-row">
+
+                <div class="example-input">
+                    Character
+                </div>
+
+                <div class="example-arrow">
+                    ↓
+                </div>
+
+                <div class="example-output">
+                    Numeric Representation
+                </div>
+
+            </div>
+
+        </div>
+
+        <p>
+            Nama <strong>Interstellar Vault</strong> juga
+            merepresentasikan konsep yang berada di balik proyek
+            ini. Sebuah "vault" menggambarkan tempat penyimpanan
+            informasi yang tidak langsung dapat diakses melalui
+            cara biasa, sedangkan "interstellar" menggambarkan
+            sesuatu yang jauh, luas, dan sulit dijangkau.
+        </p>
+
+        <p>
+            Oleh karena itu, proyek ini dibayangkan sebagai sebuah
+            arsip numerik: informasi diubah menjadi bentuk yang
+            pada awalnya terlihat asing, tetapi tetap dapat
+            dijangkau oleh seseorang yang memahami strukturnya
+            dan memiliki kunci yang tepat, yaitu
+            <strong>Interstellar Dictionary</strong>.
+        </p>
+
+        <div class="note-card">
+
+            <div class="note-title">
+                Project Philosophy
+            </div>
+
+            <p>
+                Interstellar Vault tidak dibuat untuk menggantikan
+                sistem encoding resmi. Proyek ini merupakan
+                eksplorasi konsep, struktur, dan identitas bahasa
+                numerik buatan sendiri.
+            </p>
+
+        </div>
+
+        <div class="info-card">
+
+            <div class="info-title">
+                The Core Idea
+            </div>
+
+            <p>
+                Informasi biasa → struktur numerik → dictionary →
+                decoding → informasi kembali.
+            </p>
+
+        </div>
+
+        <p>
+            Pada akhirnya, Interstellar Vault bukan hanya tentang
+            mengubah huruf menjadi angka. Sistem ini merupakan
+            eksperimen mengenai bagaimana sebuah bentuk tulisan
+            baru dapat memiliki aturan, struktur, dictionary,
+            identitas, dan cara tersendiri untuk dibaca.
+        </p>
+
+    `
+};
+
+
+/* =========================================================
+   SECTION DATABASE
+   ========================================================= */
+
+const SECTIONS = {
+
+    fundamental:
+        FUNDAMENTAL,
+
+    "numeric-atypography":
+        NUMERIC_ATYPOGRAPHY,
+
+    numericAtypography:
+        NUMERIC_ATYPOGRAPHY,
+
+    "character-structure":
+        CHARACTER_STRUCTURE,
+
+    characterStructure:
+        CHARACTER_STRUCTURE,
+
+    encoding:
+        ENCODING,
+
+    decoding:
+        DECODING,
+
+    "prefix-system":
+        PREFIX_SYSTEM,
+
+    prefixSystem:
+        PREFIX_SYSTEM,
+
+    "character-classes":
+        CHARACTER_CLASSES,
+
+    characterClasses:
+        CHARACTER_CLASSES,
+
+    "character-dictionary":
+        CHARACTER_DICTIONARY,
+
+    characterDictionary:
+        CHARACTER_DICTIONARY,
+
+    "numeric-codes":
+        NUMERIC_CODES,
+
+    numericCodes:
+        NUMERIC_CODES,
+
+    "control-characters":
+        CONTROL_CHARACTERS,
+
+    controlCharacters:
+        CONTROL_CHARACTERS,
+
+    about:
+        ABOUT
+
+};
+
+
+/* =========================================================
+   READ URL
+   ========================================================= */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const requestedSection =
+    params.get("section");
+
+
+/* =========================================================
+   SELECT CONTENT
+   ========================================================= */
+
+const selectedSection =
+    SECTIONS[requestedSection] || ABOUT;
+
+
+/* =========================================================
+   RENDER TITLE
+   ========================================================= */
+
+document.getElementById(
+    "sectionTitle"
+).textContent =
+    selectedSection.title;
+
+
+/* =========================================================
+   RENDER CONTENT
+   ========================================================= */
+
+document.getElementById(
+    "content"
+).innerHTML =
+    selectedSection.content;
+
+
+/* =========================================================
+   PAGE TITLE
+   ========================================================= */
+
+document.title =
+    "Interstellar Vault — " +
+    selectedSection.title;
+
+
+/* =========================================================
+   SCROLL TO TOP
+   ========================================================= */
+
+window.scrollTo(
+    0,
+    0
+);
+
+</script>
+
+</body>
+</html>

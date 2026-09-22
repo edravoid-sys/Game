@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#07070a">
+    <title>Interstellar Vault - Loading Screen</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #07070a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow: hidden;
+            position: relative;
+            color: #eeeef2;
+        }
+
+        /* ============================================
+           STARFIELD CANVAS
+           ============================================ */
+
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ============================================
+           MAIN LOADING CONTAINER
+           ============================================ */
+
+        .loading-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 600px;
+            padding: 40px 20px;
+            text-align: center;
+            opacity: 1;
+            transition: opacity 0.8s ease;
+        }
+
+        /* ============================================
+           TITLE
+           ============================================ */
+
+        .game-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #ff4fb3;
+            text-shadow:
+                0 0 20px rgba(255, 79, 179, 0.35),
+                0 0 45px rgba(255, 79, 179, 0.18);
+            margin-bottom: 30px;
+            animation: titleGlow 2.8s ease-in-out infinite;
+        }
+
+        .game-title-sub {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: #8d8d99;
+            margin-top: -15px;
+            margin-bottom: 40px;
+            font-family: monospace;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow:
+                    0 0 20px rgba(255, 79, 179, 0.25),
+                    0 0 45px rgba(255, 79, 179, 0.12);
+            }
+
+            50% {
+                text-shadow:
+                    0 0 30px rgba(255, 79, 179, 0.55),
+                    0 0 65px rgba(255, 79, 179, 0.22);
+            }
+        }
+
+        /* ============================================
+           PROGRESS AREA
+           ============================================ */
+
+        .progress-area {
+            margin: 40px 0;
+            transition: all 0.5s ease;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 5px;
+            background: rgba(16, 16, 22, 0.95);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 20px rgba(255, 79, 179, 0.08);
+            border: 1px solid rgba(255, 79, 179, 0.10);
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                #8f245f,
+                #ff4fb3,
+                #eeeef2,
+                #ff4fb3
+            );
+            border-radius: 4px;
+            position: relative;
+            transition: width 0.06s linear;
+            animation: fillGlow 2.2s ease-in-out infinite;
+        }
+
+        @keyframes fillGlow {
+            0% {
+                box-shadow: 0 0 5px rgba(255, 79, 179, 0.35);
+            }
+
+            50% {
+                box-shadow:
+                    0 0 20px rgba(255, 79, 179, 0.55),
+                    0 0 40px rgba(255, 79, 179, 0.15);
+            }
+
+            100% {
+                box-shadow: 0 0 5px rgba(255, 79, 179, 0.35);
+            }
+        }
+
+        /* Efek cahaya berjalan pada progress bar */
+
+        .progress-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.22),
+                transparent
+            );
+            animation: shimmer 1.4s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* ============================================
+           PERCENTAGE
+           ============================================ */
+
+        .percentage {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 1.3rem;
+            color: #ff4fb3;
+            margin-top: 18px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(255, 79, 179, 0.25);
+            font-weight: bold;
+        }
+
+        /* ============================================
+           LOG AREA
+           ============================================ */
+
+        .log-area {
+            margin-top: 30px;
+            font-family: monospace;
+            font-size: 0.65rem;
+            color: #8d8d99;
+            background: rgba(7, 7, 10, 0.75);
+            padding: 8px 20px;
+            border-radius: 6px;
+            display: inline-block;
+            border: 1px solid rgba(255, 79, 179, 0.08);
+            box-shadow: 0 0 25px rgba(255, 79, 179, 0.04);
+        }
+
+        .log-line {
+            opacity: 0.85;
+            letter-spacing: 1px;
+        }
+
+        /* ============================================
+           TOUCH TO START
+           ============================================ */
+
+        .touch-start {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(7, 7, 10, 0.88);
+            backdrop-filter: blur(5px);
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease;
+            cursor: pointer;
+        }
+
+        .touch-start.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .touch-text {
+            font-size: 1.5rem;
+            color: #ff4fb3;
+            text-transform: uppercase;
+            letter-spacing: 7px;
+            animation: pulse 1.8s infinite;
+            font-family: monospace;
+            text-shadow: 0 0 25px rgba(255, 79, 179, 0.35);
+        }
+
+        .touch-sub {
+            font-size: 0.7rem;
+            color: #8d8d99;
+            margin-top: 15px;
+            letter-spacing: 3px;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+                text-shadow:
+                    0 0 30px rgba(255, 79, 179, 0.6),
+                    0 0 60px rgba(255, 79, 179, 0.18);
+            }
+        }
+
+        /* ============================================
+           FADE OUT
+           ============================================ */
+
+        .fade-out {
+            animation: pageFadeOut 0.5s forwards !important;
+        }
+
+        @keyframes pageFadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        /* ============================================
+           INTERSTELLAR FLASH
+           ============================================ */
+
+        .vault-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ff4fb3;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s ease;
+        }
+
+        .vault-flash.active {
+            opacity: 0.55;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+
+        @media (max-width: 500px) {
+            .game-title {
+                font-size: 1.55rem;
+                letter-spacing: 3px;
+            }
+
+            .touch-text {
+                font-size: 0.95rem;
+                letter-spacing: 4px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Starfield -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Loading -->
+    <div id="loadingContainer" class="loading-container">
+
+        <div class="game-title">
+            INTERSTELLAR VAULT
+        </div>
+
+        <div class="game-title-sub">
+            NUMERIC ATYPOGRAPHY STORAGE PROTOCOL
+        </div>
+
+        <div id="progressArea" class="progress-area">
+
+            <div class="progress-bar-container">
+                <div id="progressFill" class="progress-fill"></div>
+                <div class="progress-glow"></div>
+            </div>
+
+            <div id="percentage" class="percentage">
+                0%
+            </div>
+
+        </div>
+
+        <div id="logArea" class="log-area">
+            <div id="logLine" class="log-line">
+                &gt; Initializing Interstellar Vault...
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Touch to Start -->
+    <div id="touchStart" class="touch-start">
+
+        <div class="touch-text">
+            ✦ ENTER THE VAULT ✦
+        </div>
+
+        <div class="touch-sub">
+            to access the dictionary
+        </div>
+
+    </div>
+
+    <!-- Flash -->
+    <div id="vaultFlash" class="vault-flash"></div>
+
+
+    <script>
+        (function() {
+
+            // ============================================
+            // LOADING LOG MESSAGES
+            // ============================================
+
+            const logMessages = [
+                "> Initializing Interstellar Vault...",
+                "> Loading Numeric Atypography protocol...",
+                "> Accessing Interstellar Dictionary...",
+                "> Loading character mappings...",
+                "> Verifying numeric prefixes...",
+                "> Calibrating encoding system...",
+                "> Synchronizing dictionary entries...",
+                "> Preparing translation interface...",
+                "> Validating code structure...",
+                "> Establishing Vault access...",
+                "> Finalizing Interstellar Protocol...",
+                "> Opening the Interstellar Vault..."
+            ];
+
+
+            // ============================================
+            // STATE
+            // ============================================
+
+            let currentPercent = 0;
+            let loadingInterval = null;
+            let logInterval = null;
+            let logIndex = 0;
+            let isComplete = false;
+
+
+            // ============================================
+            // DOM ELEMENTS
+            // ============================================
+
+            const loadingContainer =
+                document.getElementById("loadingContainer");
+
+            const progressFill =
+                document.getElementById("progressFill");
+
+            const percentageEl =
+                document.getElementById("percentage");
+
+            const logLineEl =
+                document.getElementById("logLine");
+
+            const touchStartEl =
+                document.getElementById("touchStart");
+
+            const vaultFlash =
+                document.getElementById("vaultFlash");
+
+            const bgCanvas =
+                document.getElementById("bgCanvas");
+
+
+            // ============================================
+            // STARFIELD
+            // ============================================
+
+            let stars = [];
+            let canvasCtx = null;
+            let animationId = null;
+
+            function initStars() {
+
+                if (!bgCanvas) return;
+
+                canvasCtx = bgCanvas.getContext("2d");
+
+                function resizeCanvas() {
+
+                    const dpr =
+                        Math.min(window.devicePixelRatio || 1, 2);
+
+                    bgCanvas.width =
+                        window.innerWidth * dpr;
+
+                    bgCanvas.height =
+                        window.innerHeight * dpr;
+
+                    bgCanvas.style.width =
+                        window.innerWidth + "px";
+
+                    bgCanvas.style.height =
+                        window.innerHeight + "px";
+
+                    canvasCtx.setTransform(
+                        dpr,
+                        0,
+                        0,
+                        dpr,
+                        0,
+                        0
+                    );
+                }
+
+                window.addEventListener(
+                    "resize",
+                    resizeCanvas
+                );
+
+                resizeCanvas();
+
+
+                // Banyak bintang dengan ukuran bervariasi
+                const starCount =
+                    Math.min(
+                        220,
+                        Math.max(
+                            110,
+                            Math.floor(
+                                window.innerWidth *
+                                window.innerHeight /
+                                5000
+                            )
+                        )
+                    );
+
+
+                stars = [];
+
+                for (let i = 0; i < starCount; i++) {
+
+                    const sizeRoll =
+                        Math.random();
+
+                    let radius;
+
+                    if (sizeRoll < 0.70) {
+                        radius =
+                            Math.random() * 0.65 + 0.25;
+
+                    } else if (sizeRoll < 0.93) {
+                        radius =
+                            Math.random() * 1.25 + 0.65;
+
+                    } else if (sizeRoll < 0.985) {
+                        radius =
+                            Math.random() * 2.0 + 1.2;
+
+                    } else {
+                        radius =
+                            Math.random() * 2.8 + 2.0;
+                    }
+
+
+                    const brightness =
+                        Math.random() * 0.65 + 0.25;
+
+
+                    // Beberapa bintang mendapat sedikit tint
+                    const tintRoll =
+                        Math.random();
+
+                    let color;
+
+                    if (tintRoll < 0.12) {
+
+                        color =
+                            `rgba(255,79,179,${brightness})`;
+
+                    } else if (tintRoll < 0.22) {
+
+                        color =
+                            `rgba(190,195,220,${brightness})`;
+
+                    } else {
+
+                        color =
+                            `rgba(238,238,242,${brightness})`;
+                    }
+
+
+                    stars.push({
+
+                        x:
+                            Math.random() *
+                            window.innerWidth,
+
+                        y:
+                            Math.random() *
+                            window.innerHeight,
+
+                        radius: radius,
+
+                        baseAlpha: brightness,
+
+                        alpha:
+                            brightness,
+
+                        color: color,
+
+                        twinkle:
+                            Math.random() *
+                            0.025 + 0.005,
+
+                        twinkleOffset:
+                            Math.random() *
+                            Math.PI * 2,
+
+                        speedX:
+                            (Math.random() - 0.5) *
+                            0.025,
+
+                        speedY:
+                            (Math.random() - 0.5) *
+                            0.018
+                    });
+                }
+
+
+                let time = 0;
+
+
+                function animateStars() {
+
+                    if (!canvasCtx || !bgCanvas)
+                        return;
+
+
+                    time += 0.016;
+
+
+                    canvasCtx.clearRect(
+                        0,
+                        0,
+                        window.innerWidth,
+                        window.innerHeight
+                    );
+
+
+                    for (const star of stars) {
+
+                        star.x += star.speedX;
+                        star.y += star.speedY;
+
+
+                        // Wrap around
+                        if (star.x < -5)
+                            star.x =
+                                window.innerWidth + 5;
+
+                        if (star.x >
+                            window.innerWidth + 5)
+                            star.x = -5;
+
+                        if (star.y < -5)
+                            star.y =
+                                window.innerHeight + 5;
+
+                        if (star.y >
+                            window.innerHeight + 5)
+                            star.y = -5;
+
+
+                        // Twinkle
+                        const twinkle =
+                            Math.sin(
+                                time *
+                                (1 +
+                                star.twinkle * 20) +
+                                star.twinkleOffset
+                            ) *
+                            star.twinkle;
+
+
+                        const alpha =
+                            Math.max(
+                                0.08,
+                                Math.min(
+                                    1,
+                                    star.baseAlpha +
+                                    twinkle
+                                )
+                            );
+
+
+                        canvasCtx.beginPath();
+
+                        canvasCtx.arc(
+                            star.x,
+                            star.y,
+                            star.radius,
+                            0,
+                            Math.PI * 2
+                        );
+
+
+                        // Rebuild rgba with current alpha
+                        let fillColor;
+
+
+                        if (star.color.includes("255,79,179")) {
+
+                            fillColor =
+                                `rgba(255,79,179,${alpha})`;
+
+                        } else if (
+                            star.color.includes(
+                                "190,195,220"
+                            )
+                        ) {
+
+                            fillColor =
+                                `rgba(190,195,220,${alpha})`;
+
+                        } else {
+
+                            fillColor =
+                                `rgba(238,238,242,${alpha})`;
+                        }
+
+
+                        canvasCtx.fillStyle =
+                            fillColor;
+
+                        canvasCtx.fill();
+
+
+                        // Glow khusus untuk bintang besar
+                        if (star.radius > 2.2) {
+
+                            canvasCtx.beginPath();
+
+                            const glow =
+                                canvasCtx.createRadialGradient(
+                                    star.x,
+                                    star.y,
+                                    0,
+                                    star.x,
+                                    star.y,
+                                    star.radius * 5
+                                );
+
+                            glow.addColorStop(
+                                0,
+                                `rgba(255,79,179,${alpha * 0.16})`
+                            );
+
+                            glow.addColorStop(
+                                1,
+                                "rgba(255,79,179,0)"
+                            );
+
+                            canvasCtx.fillStyle = glow;
+
+                            canvasCtx.arc(
+                                star.x,
+                                star.y,
+                                star.radius * 5,
+                                0,
+                                Math.PI * 2
+                            );
+
+                            canvasCtx.fill();
+                        }
+                    }
+
+
+                    animationId =
+                        requestAnimationFrame(
+                            animateStars
+                        );
+                }
+
+
+                animateStars();
+            }
+
+
+            // ============================================
+            // UPDATE LOG
+            // ============================================
+
+            function updateLog() {
+
+                if (isComplete)
+                    return;
+
+                logIndex =
+                    (logIndex + 1) %
+                    logMessages.length;
+
+                logLineEl.textContent =
+                    logMessages[logIndex];
+            }
+
+
+            // ============================================
+            // LOADING
+            // ============================================
+
+            function startLoading() {
+
+                // Log berubah setiap 1.3 detik
+                logInterval =
+                    setInterval(
+                        updateLog,
+                        1300
+                    );
+
+
+                loadingInterval =
+                    setInterval(function() {
+
+                        if (currentPercent >= 100) {
+
+                            clearInterval(
+                                loadingInterval
+                            );
+
+                            completeLoading();
+
+                            return;
+                        }
+
+
+                        // Increment utama
+                        let increment =
+                            Math.random() * 5 + 1.2;
+
+
+                        // Stuck / slow sections
+                        if (
+                            currentPercent >= 30 &&
+                            currentPercent < 36
+                        ) {
+
+                            increment =
+                                Math.random() * 1.2 +
+                                0.3;
+                        }
+
+
+                        if (
+                            currentPercent >= 55 &&
+                            currentPercent < 60
+                        ) {
+
+                            increment =
+                                Math.random() * 1.0 +
+                                0.2;
+                        }
+
+
+                        if (
+                            currentPercent >= 75 &&
+                            currentPercent < 80
+                        ) {
+
+                            increment =
+                                Math.random() * 0.8 +
+                                0.2;
+                        }
+
+
+                        if (
+                            currentPercent >= 90 &&
+                            currentPercent < 95
+                        ) {
+
+                            increment =
+                                Math.random() * 0.7 +
+                                0.1;
+                        }
+
+
+                        if (
+                            currentPercent >= 96 &&
+                            currentPercent < 99
+                        ) {
+
+                            increment =
+                                Math.random() * 0.5 +
+                                0.1;
+                        }
+
+
+                        currentPercent =
+                            Math.min(
+                                100,
+                                currentPercent +
+                                increment
+                            );
+
+
+                        progressFill.style.width =
+                            currentPercent + "%";
+
+
+                        percentageEl.textContent =
+                            Math.floor(
+                                currentPercent
+                            ) + "%";
+
+
+                        // Log berdasarkan progress
+                        if (currentPercent >= 97) {
+
+                            logLineEl.textContent =
+                                "> Opening the Interstellar Vault...";
+
+                        } else if (
+                            currentPercent >= 75
+                        ) {
+
+                            logLineEl.textContent =
+                                "> Preparing translation interface...";
+
+                        } else if (
+                            currentPercent >= 50
+                        ) {
+
+                            logLineEl.textContent =
+                                "> Synchronizing dictionary entries...";
+
+                        } else if (
+                            currentPercent >= 25
+                        ) {
+
+                            logLineEl.textContent =
+                                "> Loading Numeric Atypography protocol...";
+                        }
+
+                    }, 160);
+            }
+
+
+            // ============================================
+            // COMPLETE LOADING
+            // ============================================
+
+            function completeLoading() {
+
+                if (isComplete)
+                    return;
+
+                isComplete = true;
+
+
+                if (logInterval)
+                    clearInterval(logInterval);
+
+
+                const progressArea =
+                    document.getElementById(
+                        "progressArea"
+                    );
+
+
+                progressArea.style.transition =
+                    "opacity 0.6s ease";
+
+                progressArea.style.opacity =
+                    "0";
+
+
+                const logArea =
+                    document.getElementById(
+                        "logArea"
+                    );
+
+
+                logArea.style.transition =
+                    "opacity 0.5s ease";
+
+                logArea.style.opacity =
+                    "0";
+
+
+                setTimeout(function() {
+
+                    progressArea.style.display =
+                        "none";
+
+                    logArea.style.display =
+                        "none";
+
+
+                    touchStartEl.classList.add(
+                        "visible"
+                    );
+
+
+                    const startHandler =
+                        function() {
+
+                            document.removeEventListener(
+                                "click",
+                                startHandler
+                            );
+
+                            document.removeEventListener(
+                                "touchstart",
+                                startHandler
+                            );
+
+                            touchStartEl.removeEventListener(
+                                "click",
+                                startHandler
+                            );
+
+
+                            startTransitionToVault();
+                        };
+
+
+                    document.addEventListener(
+                        "click",
+                        startHandler
+                    );
+
+                    document.addEventListener(
+                        "touchstart",
+                        startHandler
+                    );
+
+                    touchStartEl.addEventListener(
+                        "click",
+                        startHandler
+                    );
+
+                }, 600);
+            }
+
+
+            // ============================================
+            // TRANSITION TO INTERSTELLAR VAULT
+            // ============================================
+
+            function startTransitionToVault() {
+
+                vaultFlash.classList.add(
+                    "active"
+                );
+
+
+                loadingContainer.style.transition =
+                    "opacity 0.4s ease";
+
+                loadingContainer.style.opacity =
+                    "0";
+
+
+                touchStartEl.style.transition =
+                    "opacity 0.3s ease";
+
+                touchStartEl.style.opacity =
+                    "0";
+
+
+                setTimeout(function() {
+
+                    vaultFlash.style.transition =
+                        "opacity 0.12s";
+
+                    vaultFlash.style.opacity =
+                        "0.65";
+
+
+                    setTimeout(function() {
+
+                        vaultFlash.style.opacity =
+                            "0";
+
+
+                        setTimeout(function() {
+
+                            window.location.href =
+                                "Interstellar Dictionary(copy).html";
+
+                        }, 150);
+
+                    }, 90);
+
+                }, 250);
+            }
+
+
+            // ============================================
+            // INITIALIZATION
+            // ============================================
+
+            function init() {
+
+                initStars();
+
+                startLoading();
+            }
+
+
+            window.addEventListener(
+                "load",
+                init
+            );
+
+
+            // Cleanup
+            window.addEventListener(
+                "beforeunload",
+                function() {
+
+                    if (animationId)
+                        cancelAnimationFrame(
+                            animationId
+                        );
+
+                    if (loadingInterval)
+                        clearInterval(
+                            loadingInterval
+                        );
+
+                    if (logInterval)
+                        clearInterval(
+                            logInterval
+                        );
+                }
+            );
+
+        })();
+    </script>
+
+</body>
+</html>
