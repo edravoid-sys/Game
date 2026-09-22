@@ -1,2 +1,2 @@
-# Game
+# Interstellar
 Text-based Game 
